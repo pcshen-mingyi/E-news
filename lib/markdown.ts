@@ -59,7 +59,13 @@ export async function getArticleContent(
   const { data, content } = matter(fileContent);
 
   const processed = await remark().use(gfm).use(html).process(content);
-  const contentHtml = processed.toString();
+  // 外部連結自動加上 target="_blank" 和安全屬性
+  const contentHtml = processed
+    .toString()
+    .replace(
+      /<a href="(https?:\/\/[^"]+)">/g,
+      '<a href="$1" target="_blank" rel="noopener noreferrer">'
+    );
 
   return {
     meta: {
