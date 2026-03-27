@@ -1,10 +1,12 @@
 import Link from "next/link";
+import Image from "next/image";
 
 interface SectionBlockProps {
   title: string;
   description: string;
   href: string;
-  imageUrl: string;
+  imageSrc: string;
+  imageAlt: string;
   reverse?: boolean;
 }
 
@@ -12,7 +14,8 @@ export default function SectionBlock({
   title,
   description,
   href,
-  imageUrl,
+  imageSrc,
+  imageAlt,
   reverse = false,
 }: SectionBlockProps) {
   return (
@@ -20,7 +23,7 @@ export default function SectionBlock({
       <div
         className={`flex flex-col ${
           reverse ? "md:flex-row-reverse" : "md:flex-row"
-        } items-center gap-8 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden`}
+        } items-center gap-0 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden`}
       >
         {/* Text */}
         <div className="flex-1 p-8">
@@ -43,8 +46,15 @@ export default function SectionBlock({
         </div>
 
         {/* Image */}
-        <div className="flex-1 min-h-[250px] bg-gray-100 flex items-center justify-center">
-          <div className="text-6xl">{imageUrl}</div>
+        <div className="flex-1 relative min-h-[280px] md:min-h-[320px]">
+          <Image
+            src={imageSrc}
+            alt={imageAlt}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            priority
+          />
         </div>
       </div>
     </div>

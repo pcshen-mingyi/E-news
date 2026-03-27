@@ -16,7 +16,8 @@ export default function Home() {
         title="技術新知"
         description="深入淺出的 AI 技術解析，從基礎概念到前沿研究，帶你掌握核心技術脈動。"
         href="/tech"
-        imageUrl="🔬"
+        imageSrc="/images/section-tech.png"
+        imageAlt="AI 技術新知 — 神經網絡與電路板插畫"
       />
 
       <div className="bg-gray-bg">
@@ -24,7 +25,8 @@ export default function Home() {
           title="應用新知"
           description="探索 AI 在各行各業的實際應用案例，看看 AI 如何改變工作與生活。"
           href="/apps"
-          imageUrl="🚀"
+          imageSrc="/images/section-apps.png"
+          imageAlt="AI 應用新知 — 團隊協作與 AI 工具插畫"
           reverse
         />
       </div>
@@ -33,7 +35,8 @@ export default function Home() {
         title="PC 小筆記"
         description="個人學習心得與實作紀錄，分享 AI 工具使用技巧與 Prompt 工程經驗。"
         href="/notes"
-        imageUrl="📝"
+        imageSrc="/images/section-notes.png"
+        imageAlt="PC 小筆記 — 筆記本與學習插畫"
       />
 
       {/* Latest articles */}
