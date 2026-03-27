@@ -21,52 +21,131 @@
    content/tech/2026-03-26-llm-fine-tuning.md
    ```
 
-4. 撰寫文章，須包含 frontmatter：
-   ```markdown
-   ---
-   title: "文章標題"
-   date: "2026-03-26"
-   author: "你的名字"
-   tags: ["tag1", "tag2"]
-   summary: "一句話摘要，會顯示在卡片上"
-   ---
+4. 撰寫文章（詳細格式見下方）
 
-   ## 正文開始
+5. 如果有縮圖，將圖片放到 `public/images/articles/`
 
-   支援完整 Markdown 語法：
-
-   - **粗體**、*斜體*
-   - `行內程式碼`
-   - 程式碼區塊（附語法高亮）
-   - 圖片、連結、表格
-   ```
-
-5. 提交 PR：
+6. 提交 PR：
    ```bash
    git add content/tech/2026-03-26-llm-fine-tuning.md
+   git add public/images/articles/llm-fine-tuning.webp  # 如果有縮圖
    git commit -m "post: LLM Fine-tuning 入門指南"
    git push -u origin post/my-article-name
    ```
 
-6. 在 GitHub 建立 Pull Request，合併後自動部署
+7. 在 GitHub 建立 Pull Request，合併後自動部署
+
+---
+
+## 文章格式規範
+
+### 完整範例
+
+```markdown
+---
+title: "RAG 技術完整指南：從原理到實作"
+date: "2026-03-27"
+author: "PC"
+tags: ["RAG", "LLM", "向量資料庫"]
+summary: "深入解析 RAG 架構，並以實際案例示範如何結合檢索與生成，打造精準的 AI 問答系統。"
+thumbnail: "/images/articles/rag-guide.webp"
+---
+
+## 前言
+
+簡短介紹文章主題和讀者能學到什麼...
+
+## 主要內容
+
+### 第一節：什麼是 RAG？
+
+正文內容，支援完整 Markdown 語法：
+
+- **粗體**、*斜體*
+- `行內程式碼`
+- [超連結](https://example.com)
+
+### 第二節：實作步驟
+
+程式碼區塊（附語法高亮）：
+
+\```python
+from langchain import RetrievalQA
+\```
+
+### 第三節：成果與心得
+
+分享你的觀察和建議...
+
+## 總結
+
+一段簡短的總結，幫助讀者回顧重點。
+```
 
 ### Frontmatter 欄位說明
 
-| 欄位 | 必填 | 說明 |
-|------|------|------|
-| `title` | 是 | 文章標題 |
-| `date` | 是 | 發布日期（YYYY-MM-DD） |
-| `author` | 建議 | 作者名字 |
-| `tags` | 建議 | 標籤陣列，用於分類和搜尋 |
-| `summary` | 建議 | 一句話摘要，顯示在卡片和 SEO 描述 |
+| 欄位 | 必填 | 格式 | 說明 |
+|------|------|------|------|
+| `title` | ✅ 必填 | 字串 | 文章標題，建議 10-30 字 |
+| `date` | ✅ 必填 | `YYYY-MM-DD` | 發布日期，影響排序（新的在前） |
+| `author` | 建議填 | 字串 | 作者名字 |
+| `tags` | 建議填 | 字串陣列 | 標籤，卡片最多顯示 3 個 |
+| `summary` | 建議填 | 字串 | 一句話摘要（50 字以內），顯示在卡片和 SEO |
+| `thumbnail` | 選填 | 路徑字串 | 文章縮圖，沒填會顯示預設漸層圖 |
 
-### 分類指引
+### 縮圖規範
 
-| 分類 | 適合內容 |
-|------|---------|
-| 技術新知 (`tech`) | AI 模型架構、演算法、論文解讀、技術深度文 |
-| 應用新知 (`apps`) | AI 工具評測、產業應用案例、導入經驗 |
-| PC 小筆記 (`notes`) | 學習心得、使用技巧、快速筆記 |
+| 項目 | 建議 |
+|------|------|
+| 存放位置 | `public/images/articles/` |
+| 命名方式 | 與文章 slug 一致，例如 `rag-guide.webp` |
+| 檔案格式 | `.webp`（優先）、`.png`、`.jpg` |
+| 建議尺寸 | 800 × 450 px（16:9 比例） |
+| 檔案大小 | 100KB 以內 |
+| 路徑寫法 | `/images/articles/rag-guide.webp`（以 `/` 開頭） |
+
+> 💡 **小技巧**：可以用 [Google ImageFX](https://aitestkitchen.withgoogle.com/tools/image-fx) 或 Gemini 免費生成配圖，再用 `cwebp -q 80 -resize 800 0 input.png -o output.webp` 壓縮。
+
+**沒有縮圖也沒關係！** 不填 `thumbnail` 欄位，卡片會顯示漂亮的漸層底色 + 分類 emoji。
+
+---
+
+## 分類指引
+
+| 分類 | 資料夾 | 適合內容 | 範例主題 |
+|------|--------|---------|---------|
+| 技術新知 | `content/tech/` | AI 模型架構、演算法、論文解讀 | Transformer 原理、Fine-tuning 教學 |
+| 應用新知 | `content/apps/` | AI 工具評測、產業應用案例 | ChatGPT 企業導入、AI 客服實戰 |
+| PC 小筆記 | `content/notes/` | 學習心得、使用技巧、快速筆記 | Prompt 工程技巧、工具比較心得 |
+
+---
+
+## 寫作建議
+
+### 標題
+
+- ✅ 具體明確：`RAG 技術完整指南：從原理到實作`
+- ❌ 太模糊：`AI 很厲害`
+
+### 摘要 (summary)
+
+- ✅ 說明讀者能學到什麼：`深入解析 RAG 架構，並以實際案例示範如何打造 AI 問答系統。`
+- ❌ 太空泛：`關於 RAG 的一些東西`
+
+### 標籤 (tags)
+
+- 使用 2-5 個標籤
+- 優先用既有標籤保持一致性
+- 常用標籤：`LLM`、`RAG`、`Prompt Engineering`、`ChatGPT`、`Computer Vision`、`NLP`、`Fine-tuning`、`Agent`
+
+### 正文
+
+- 善用 `##` 和 `###` 做章節分層
+- 程式碼請標注語言（如 ` ```python `）
+- 適當加入圖片、表格增加可讀性
+- 建議長度：800-2000 字
+
+---
 
 ## 投稿到組織應用專區
 
@@ -76,6 +155,8 @@
 2. 點選「組織應用專區」→「我要投稿」
 3. 填寫表單：組織名稱、標題、描述、內容、標籤
 4. 提交後等待管理員審核
+
+---
 
 ## 程式碼貢獻
 
@@ -105,6 +186,7 @@ Types：
 - `docs` — 文件更新
 - `chore` — 雜項
 - `style` — 樣式調整
+- `perf` — 效能優化
 
 ### 分支命名
 

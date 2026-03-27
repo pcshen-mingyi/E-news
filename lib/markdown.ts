@@ -7,6 +7,13 @@ import type { ArticleMeta } from "@/components/ArticleGrid";
 
 const contentDirectory = path.join(process.cwd(), "content");
 
+/** Validate thumbnail: only allow local paths starting with "/" */
+function validThumbnail(value: unknown): string | undefined {
+  if (typeof value !== "string") return undefined;
+  if (value.startsWith("/")) return value;
+  return undefined;
+}
+
 export function getArticlesByCategory(category: string): ArticleMeta[] {
   const dir = path.join(contentDirectory, category);
   if (!fs.existsSync(dir)) return [];
@@ -27,6 +34,7 @@ export function getArticlesByCategory(category: string): ArticleMeta[] {
       tags: data.tags || [],
       summary: data.summary || "",
       category,
+      thumbnail: validThumbnail(data.thumbnail),
     };
   });
 
@@ -61,6 +69,7 @@ export async function getArticleContent(
       tags: data.tags || [],
       summary: data.summary || "",
       category,
+      thumbnail: validThumbnail(data.thumbnail),
     },
     contentHtml,
   };

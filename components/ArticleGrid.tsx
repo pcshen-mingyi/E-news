@@ -8,6 +8,7 @@ export interface ArticleMeta {
   tags: string[];
   summary: string;
   category: string;
+  thumbnail?: string;
 }
 
 interface ArticleGridProps {
@@ -35,6 +36,7 @@ export default function ArticleGrid({ articles }: ArticleGridProps) {
           tags={article.tags}
           href={`/${article.category}/${article.slug}`}
           category={article.category}
+          thumbnail={article.thumbnail}
         />
       ))}
     </div>

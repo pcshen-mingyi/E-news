@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 interface ArticleCardProps {
   title: string;
@@ -7,6 +8,7 @@ interface ArticleCardProps {
   tags: string[];
   href: string;
   category: string;
+  thumbnail?: string;
 }
 
 export default function ArticleCard({
@@ -16,6 +18,7 @@ export default function ArticleCard({
   tags,
   href,
   category,
+  thumbnail,
 }: ArticleCardProps) {
   const categoryColors: Record<string, string> = {
     tech: "bg-blue-100 text-blue-700",
@@ -32,11 +35,23 @@ export default function ArticleCard({
   return (
     <Link href={href} className="group">
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow h-full flex flex-col">
-        {/* Image placeholder */}
-        <div className="h-48 bg-gradient-to-br from-teal/10 to-teal-light/20 flex items-center justify-center">
-          <span className="text-4xl opacity-50">
-            {category === "tech" ? "🔬" : category === "apps" ? "🚀" : "📝"}
-          </span>
+        {/* Thumbnail or fallback */}
+        <div className="relative h-48 overflow-hidden bg-gray-100">
+          {thumbnail ? (
+            <Image
+              src={thumbnail}
+              alt={title}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            />
+          ) : (
+            <div className="h-full bg-gradient-to-br from-teal/10 to-teal-light/20 flex items-center justify-center">
+              <span className="text-4xl opacity-50">
+                {category === "tech" ? "🔬" : category === "apps" ? "🚀" : "📝"}
+              </span>
+            </div>
+          )}
         </div>
 
         <div className="p-5 flex-1 flex flex-col">
