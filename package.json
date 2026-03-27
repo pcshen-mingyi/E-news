@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
+    "@libsql/client": "^0.17.2",
+    "@prisma/adapter-libsql": "^7.5.0",
     "@prisma/client": "^6.19.2",
     "gray-matter": "^4.0.3",
     "next": "16.2.1",
