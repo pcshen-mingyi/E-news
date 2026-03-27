@@ -3,6 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
+import gfm from "remark-gfm";
 import type { ArticleMeta } from "@/components/ArticleGrid";
 
 const contentDirectory = path.join(process.cwd(), "content");
@@ -57,7 +58,7 @@ export async function getArticleContent(
   const fileContent = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(fileContent);
 
-  const processed = await remark().use(html).process(content);
+  const processed = await remark().use(gfm).use(html).process(content);
   const contentHtml = processed.toString();
 
   return {

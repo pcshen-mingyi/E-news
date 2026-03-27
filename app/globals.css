@@ -37,3 +37,9 @@ body {
 .prose a { color: var(--color-teal); text-decoration: underline; }
 .prose blockquote { border-left: 4px solid var(--color-teal); padding-left: 1rem; color: var(--color-text-secondary); font-style: italic; margin-bottom: 1rem; }
 .prose img { border-radius: 0.5rem; margin: 1rem 0; }
+.prose table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.95em; }
+.prose thead { background: var(--color-gray-bg); }
+.prose th { padding: 0.75rem 1rem; text-align: left; font-weight: 600; color: var(--color-text-primary); border-bottom: 2px solid #e5e7eb; }
+.prose td { padding: 0.75rem 1rem; border-bottom: 1px solid #e5e7eb; color: var(--color-text-secondary); line-height: 1.6; }
+.prose tbody tr:hover { background: #f9fafb; }
+.prose hr { border: none; border-top: 1px solid #e5e7eb; margin: 2rem 0; }
