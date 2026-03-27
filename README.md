@@ -267,6 +267,18 @@ npx prisma studio    # 開啟資料庫 GUI
 npx prisma migrate dev  # 執行資料庫遷移
 ```
 
+## 專案文件
+
+詳細的技術文件位於 `docs/` 資料夾：
+
+| 文件 | 說明 |
+|------|------|
+| [architecture.md](docs/architecture.md) | 技術架構總覽（系統架構、技術棧、資料模型、路由、元件） |
+| [decisions.md](docs/decisions.md) | 技術決策記錄 ADR（每個重要決策的背景與原因） |
+| [deployment.md](docs/deployment.md) | 部署與基礎設施（Vercel、Turso、Google OAuth 設定） |
+| [changelog.md](docs/changelog.md) | 開發歷程（每次重要變更的時間線） |
+| [troubleshooting.md](docs/troubleshooting.md) | 問題排解指南（踩過的坑與解法） |
+
 ## 設計風格
 
 - **主色**：湖水綠 `#2BA8A0`
