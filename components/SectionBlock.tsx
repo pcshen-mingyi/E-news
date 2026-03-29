@@ -49,7 +49,7 @@ export default function SectionBlock({
         </div>
 
         {/* Image */}
-        <div className="flex-1 relative min-h-[280px] md:min-h-[320px] bg-gray-100">
+        <div className="w-full md:flex-1 relative min-h-[240px] md:min-h-[320px] bg-gray-100">
           <Image
             src={imageSrc}
             alt={imageAlt}
