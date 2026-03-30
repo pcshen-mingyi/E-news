@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 interface CommentItemProps {
   comment: {
     id: string;
@@ -12,8 +14,7 @@ interface CommentItemProps {
     };
   };
   currentUserId?: string;
-  isAdmin?: boolean;
-  onDelete: (id: string) => void;
+  onEdit: (id: string, newContent: string) => Promise<boolean>;
 }
 
 function timeAgo(dateString: string): string {
@@ -32,12 +33,32 @@ function timeAgo(dateString: string): string {
 export default function CommentItem({
   comment,
   currentUserId,
-  isAdmin,
-  onDelete,
+  onEdit,
 }: CommentItemProps) {
-  const canDelete =
-    currentUserId === comment.author.id || isAdmin;
+  const isOwner = currentUserId === comment.author.id;
   const initials = (comment.author.name || "?").charAt(0).toUpperCase();
+
+  const [editing, setEditing] = useState(false);
+  const [editContent, setEditContent] = useState(comment.content);
+  const [saving, setSaving] = useState(false);
+
+  const handleSave = async () => {
+    const trimmed = editContent.trim();
+    if (!trimmed || saving) return;
+
+    setSaving(true);
+    const success = await onEdit(comment.id, trimmed);
+    setSaving(false);
+
+    if (success) {
+      setEditing(false);
+    }
+  };
+
+  const handleCancel = () => {
+    setEditContent(comment.content);
+    setEditing(false);
+  };
 
   return (
     <div className="flex gap-3 py-4">
@@ -64,18 +85,55 @@ export default function CommentItem({
           <span className="text-xs text-text-secondary">
             {timeAgo(comment.createdAt)}
           </span>
-          {canDelete && (
+          {isOwner && !editing && (
             <button
-              onClick={() => onDelete(comment.id)}
-              className="text-xs text-red-500 hover:underline ml-auto"
+              onClick={() => setEditing(true)}
+              className="text-xs text-teal hover:underline ml-auto"
             >
-              刪除
+              修改
             </button>
           )}
         </div>
-        <p className="text-sm text-text-secondary whitespace-pre-wrap break-words">
-          {comment.content}
-        </p>
+
+        {editing ? (
+          <div>
+            <textarea
+              value={editContent}
+              onChange={(e) => setEditContent(e.target.value)}
+              maxLength={1000}
+              rows={3}
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal focus:border-transparent resize-y"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+                  handleSave();
+                }
+              }}
+            />
+            <div className="flex items-center gap-2 mt-2">
+              <button
+                onClick={handleSave}
+                disabled={saving || editContent.trim().length === 0}
+                className="bg-teal text-white px-4 py-1.5 rounded-full text-xs font-medium hover:bg-teal-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {saving ? "儲存中..." : "儲存"}
+              </button>
+              <button
+                onClick={handleCancel}
+                disabled={saving}
+                className="text-xs text-text-secondary hover:text-text-primary transition-colors"
+              >
+                取消
+              </button>
+              <span className="text-xs text-text-secondary ml-auto">
+                {editContent.length}/1000
+              </span>
+            </div>
+          </div>
+        ) : (
+          <p className="text-sm text-text-secondary whitespace-pre-wrap break-words">
+            {comment.content}
+          </p>
+        )}
       </div>
     </div>
   );

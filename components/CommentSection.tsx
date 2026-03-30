@@ -91,17 +91,28 @@ export default function CommentSection({
     [content, submitting, articleSlug]
   );
 
-  const handleDelete = useCallback(async (id: string) => {
+  const handleEdit = useCallback(async (id: string, newContent: string): Promise<boolean> => {
+    setError("");
     try {
-      const res = await fetch(`/api/comments/${id}`, { method: "DELETE" });
+      const res = await fetch(`/api/comments/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: newContent }),
+      });
       if (res.ok) {
-        setComments((prev) => prev.filter((c) => c.id !== id));
+        const updated = await res.json();
+        setComments((prev) =>
+          prev.map((c) => (c.id === id ? { ...c, content: updated.content } : c))
+        );
+        return true;
       } else {
         const data = await res.json();
-        setError(data.error || "刪除失敗，請稍後再試");
+        setError(data.error || "修改失敗，請稍後再試");
+        return false;
       }
     } catch {
-      setError("刪除失敗，請稍後再試");
+      setError("修改失敗，請稍後再試");
+      return false;
     }
   }, []);
 
@@ -124,8 +135,7 @@ export default function CommentSection({
               key={comment.id}
               comment={comment}
               currentUserId={user?.id}
-              isAdmin={user?.role === "admin"}
-              onDelete={handleDelete}
+              onEdit={handleEdit}
             />
           ))}
         </div>
