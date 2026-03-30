@@ -106,6 +106,18 @@ from langchain import RetrievalQA
 
 > 💡 **小技巧**：可以用 [Google ImageFX](https://aitestkitchen.withgoogle.com/tools/image-fx) 或 Gemini 免費生成配圖，再用 `cwebp -q 80 -resize 800 0 input.png -o output.webp` 壓縮。
 
+### 各分類視覺風格
+
+為了讓網站視覺一致，每個分類有各自的色彩風格：
+
+| 分類 | 主色調 | 視覺風格 | 關鍵元素 |
+|------|--------|---------|---------|
+| 技術新知 | 深藍紫色 (#1a237e ~ #6a1b9a) | 科技感、冷調 | 電路板線條、數據流、幾何圖形 |
+| 應用新知 | 暖橘色 (#e65100 ~ #ffa000) | 溫暖、實用 | 人與 AI 互動、工作場景、協作意象 |
+| PC 小筆記 | 柔和綠色 (#2e7d32 ~ #81c784) | 輕鬆、手寫感 | 筆記本、便利貼、書桌場景 |
+
+生成縮圖時，請依照文章分類使用對應的色彩與視覺元素，確保整體風格統一。詳細的 Prompt 範本與色票可參考各分類的 Skill 文件（`.claude/skills/enews-tech/`、`enews-apps/`、`enews-notes/`）。
+
 **沒有縮圖也沒關係！** 不填 `thumbnail` 欄位，卡片會顯示漂亮的漸層底色 + 分類 emoji。
 
 ---
