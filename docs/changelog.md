@@ -4,6 +4,30 @@
 
 ---
 
+## 2026-03-30
+
+### 文章留言討論功能
+
+- **規劃**: Planner agent 產出 5 階段實作計畫（Schema → API → UI → 整合 → 安全加固）
+- **資料庫**: 新增 `Comment` model，含 `articleSlug` 索引，關聯 `User`
+- **API**:
+  - `GET /api/comments?articleSlug=tech/slug` — 公開讀取
+  - `POST /api/comments` — 登入後留言（DB-based rate limit，10 秒內限 1 則）
+  - `DELETE /api/comments/[id]` — 作者或管理員可刪除（含 CSRF origin check）
+- **UI**: `CommentSection` + `CommentItem` 元件，支援即時新增/刪除、字數計算、未登入提示
+- **整合**: 三個分類文章頁面（tech / apps / notes）底部加入留言區
+- **安全**: Code Review + Security Review 通過
+  - 修復：JSON parse error handling、DB-based rate limit（取代 in-memory）、CSRF origin 驗證、delete 錯誤回饋
+  - React JSX auto-escape 防 XSS（不使用 dangerouslySetInnerHTML）
+- **Turso**: 手動建立 Comment 表 + 索引
+
+### 新增文章
+
+- PC 小筆記：「搞懂 AI Agent 的本質：它就是一個你帶的實習生」
+- 更新文章縮圖色彩規範（技術=深藍紫、應用=暖橘、筆記=柔和綠）
+
+---
+
 ## 2026-03-27
 
 ### Turso 雲端資料庫遷移

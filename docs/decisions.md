@@ -116,3 +116,34 @@
 **流程**: 投稿 → pending → 管理員審核 → approved / rejected
 
 **角色管理**: User 表的 `role` 欄位（`user` / `admin`），首位管理員需透過 Prisma Studio 手動設定
+
+---
+
+## ADR-007: 自建留言系統（而非第三方服務）
+
+**日期**: 2026-03-30
+**狀態**: 已採用
+
+**背景**: 希望文章下方有留言討論功能，增加團隊互動。
+
+**考慮過的方案**:
+
+| 方案 | 優點 | 缺點 |
+|------|------|------|
+| Giscus (GitHub Discussions) | 零後端、免費 | 需要 GitHub 帳號 |
+| Disqus | 簡單嵌入 | 有廣告、隱私疑慮 |
+| 自建 | 用現有 Google 登入、完全客製 | 需要開發 |
+
+**決策**: 自建留言系統，複用現有 NextAuth + Prisma + Turso 基礎設施
+
+**理由**:
+- 團隊成員已有 Google 帳號且已設定 OAuth，不需額外帳號
+- Turso 免費額度足夠（數萬筆留言無壓力）
+- 實際開發量小（1 model + 2 API routes + 2 components）
+- 完全客製化 UI，與網站風格一致
+
+**安全措施**:
+- Database-based rate limit（serverless 環境有效）
+- CSRF origin 檢查
+- React JSX auto-escape（不使用 dangerouslySetInnerHTML）
+- 作者/管理員才能刪除留言
