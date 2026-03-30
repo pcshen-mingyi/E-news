@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getArticleContent, getArticlesByCategory } from "@/lib/markdown";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import CommentSection from "@/components/CommentSection";
 
 export async function generateStaticParams() {
   const articles = getArticlesByCategory("apps");
@@ -54,6 +55,7 @@ export default async function AppsArticlePage({
         </header>
         <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: article.contentHtml }} />
       </article>
+      <CommentSection articleSlug={`apps/${slug}`} />
     </div>
   );
 }

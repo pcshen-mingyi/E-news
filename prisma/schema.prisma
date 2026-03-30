@@ -18,6 +18,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   submissions   Submission[]
+  comments      Comment[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -69,4 +70,17 @@ model Submission {
   author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+// Article comments
+model Comment {
+  id          String   @id @default(cuid())
+  content     String
+  articleSlug String   // "tech/slug-name", "apps/slug-name", "notes/slug-name"
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([articleSlug])
 }
