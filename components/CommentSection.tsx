@@ -8,6 +8,7 @@ interface Comment {
   id: string;
   content: string;
   createdAt: string;
+  updatedAt: string;
   author: {
     id: string;
     name: string | null;
@@ -102,7 +103,7 @@ export default function CommentSection({
       if (res.ok) {
         const updated = await res.json();
         setComments((prev) =>
-          prev.map((c) => (c.id === id ? { ...c, content: updated.content } : c))
+          prev.map((c) => (c.id === id ? { ...c, content: updated.content, updatedAt: updated.updatedAt } : c))
         );
         return true;
       } else {

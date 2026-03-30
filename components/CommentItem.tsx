@@ -7,6 +7,7 @@ interface CommentItemProps {
     id: string;
     content: string;
     createdAt: string;
+    updatedAt: string;
     author: {
       id: string;
       name: string | null;
@@ -85,6 +86,9 @@ export default function CommentItem({
           <span className="text-xs text-text-secondary">
             {timeAgo(comment.createdAt)}
           </span>
+          {comment.updatedAt !== comment.createdAt && (
+            <span className="text-xs text-text-secondary italic">已編輯</span>
+          )}
           {isOwner && !editing && (
             <button
               onClick={() => setEditing(true)}
