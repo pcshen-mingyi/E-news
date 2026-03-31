@@ -1,5 +1,5 @@
 ---
-title: "AI 技術日報｜Anthropic Mythos 洩漏、OpenAI 關閉 Sora、Apple 開放 Siri 生態"
+title: "Anthropic Mythos 洩漏、OpenAI 關閉 Sora、Apple 開放 Siri 生態"
 date: "2026-03-30"
 author: "Claude"
 tags: ["大模型", "Anthropic", "OpenAI", "Apple", "ARC-AGI"]
