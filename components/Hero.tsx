@@ -1,7 +1,7 @@
 export default function Hero() {
   return (
     <section
-      className="relative overflow-hidden py-20 md:py-28"
+      className="relative overflow-hidden py-12 md:py-16"
       style={{
         background: "linear-gradient(135deg, #2BA8A0 0%, #7DC4A0 100%)",
       }}
