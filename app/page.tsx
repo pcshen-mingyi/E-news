@@ -11,6 +11,28 @@ export default function Home() {
     <>
       <Hero />
 
+      {/* Latest articles */}
+      <section className="bg-gray-bg py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-2xl font-bold text-text-primary">最新文章</h2>
+              <div className="w-16 h-1 bg-teal mt-2 rounded-full" />
+            </div>
+            <Link
+              href="/tech"
+              className="text-teal hover:text-teal-dark transition-colors text-sm font-medium flex items-center gap-1"
+            >
+              更多文章
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+          <ArticleGrid articles={latestArticles} />
+        </div>
+      </section>
+
       {/* Section blocks - alternating layout */}
       <SectionBlock
         title="技術新知"
@@ -39,28 +61,6 @@ export default function Home() {
         imageSrc="/images/section-notes.webp"
         imageAlt="PC 小筆記 — 筆記本與學習插畫"
       />
-
-      {/* Latest articles */}
-      <section className="bg-gray-bg py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="text-2xl font-bold text-text-primary">最新文章</h2>
-              <div className="w-16 h-1 bg-teal mt-2 rounded-full" />
-            </div>
-            <Link
-              href="/tech"
-              className="text-teal hover:text-teal-dark transition-colors text-sm font-medium flex items-center gap-1"
-            >
-              更多文章
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
-          </div>
-          <ArticleGrid articles={latestArticles} />
-        </div>
-      </section>
     </>
   );
 }
