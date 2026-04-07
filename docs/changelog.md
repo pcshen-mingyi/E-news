@@ -4,6 +4,30 @@
 
 ---
 
+## 2026-04-07
+
+### 匿名按讚/倒讚功能
+
+- **規劃**: Planner agent 設計 IP hash 防重複投票方案
+- **資料庫**: 新增 `Reaction` model（`articleSlug` + `ipHash` unique constraint）
+- **API**:
+  - `GET /api/reactions?articleSlug=tech/slug` — 回傳按讚數、倒讚數、當前 IP 投票狀態
+  - `POST /api/reactions` — 投票/取消/切換（CSRF check + 2 秒 rate limit）
+- **UI**: `ReactionBar` 元件，「這篇文章對你有幫助嗎？」+ 👍/👎 按鈕
+  - Optimistic update + 錯誤回滾
+  - 按讚啟用：teal 色調；倒讚啟用：紅色調
+- **整合**: 三個分類文章頁面底部加入，位於留言區上方
+- **安全**: IP 以 SHA-256 + salt 雜湊儲存，不保留原始 IP
+- **Turso**: 手動建立 Reaction 表 + unique index + articleSlug index
+
+### 新文章上線
+
+- 技術新知 4/6：開源 AI 的黃金交叉（Gemma 4 / DeepSeek V4）
+- 技術新知 4/7：AI 助手走出聊天框（CarPlay / Google Maps / Copilot 條款）
+- 應用新知 4/7：AI 越用越上手（Anthropic 學習曲線 + Microsoft 培訓）
+
+---
+
 ## 2026-03-30
 
 ### 文章留言討論功能

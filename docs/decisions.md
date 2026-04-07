@@ -147,3 +147,34 @@
 - CSRF origin 檢查
 - React JSX auto-escape（不使用 dangerouslySetInnerHTML）
 - 作者/管理員才能刪除留言
+
+---
+
+## ADR-008: 匿名按讚/倒讚以 IP hash 防重複
+
+**日期**: 2026-04-07
+**狀態**: 已採用
+
+**背景**: 留言功能需要登入，門檻太高，希望有不需登入的互動方式。
+
+**考慮過的方案**:
+
+| 方案 | 優點 | 缺點 |
+|------|------|------|
+| localStorage | 最簡單、零後端 | 換瀏覽器/清快取即可重複投票 |
+| IP hash | 較嚴格、後端記錄 | 同一網路的人被擋、VPN 可繞過 |
+| Fingerprint + localStorage | 比純 localStorage 難繞過 | 仍可繞過、增加前端複雜度 |
+
+**決策**: 採用 IP hash（SHA-256 + salt），後端記錄
+
+**理由**:
+- 使用者偏好較嚴格的防重複機制
+- 同一網路衝突在小型團隊場景中可接受
+- IP 以 SHA-256 + salt 雜湊，不儲存原始 IP，保護隱私
+- 不需新增前端依賴，用 Node.js 內建 `crypto`
+
+**安全措施**:
+- IP hash salt 可透過 `IP_HASH_SALT` 環境變數自訂
+- CSRF origin header 檢查
+- 2 秒 rate limit 防快速連擊
+- `@@unique([articleSlug, ipHash])` 資料庫層級防重複

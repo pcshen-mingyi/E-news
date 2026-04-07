@@ -1,6 +1,6 @@
 # 技術架構文件
 
-> 最後更新：2026-03-27
+> 最後更新：2026-04-07
 
 ## 系統架構總覽
 
@@ -63,6 +63,8 @@ else
 | Session | 使用者 Session |
 | VerificationToken | Email 驗證 Token |
 | Submission | 組織投稿（含 pending/approved/rejected 狀態） |
+| Comment | 文章留言（關聯 User，含 articleSlug 索引） |
+| Reaction | 匿名按讚/倒讚（IP hash 防重複，articleSlug + ipHash unique） |
 
 ## 內容管理
 
@@ -123,6 +125,9 @@ summary: "摘要文字"
 | `/api/auth/[...nextauth]` | API | NextAuth 端點 |
 | `/api/showcase` | API | GET 列表 / POST 新增 |
 | `/api/showcase/[id]` | API | PATCH 更新狀態 |
+| `/api/comments` | API | GET 留言 / POST 新增 |
+| `/api/comments/[id]` | API | PATCH 編輯 / DELETE 刪除 |
+| `/api/reactions` | API | GET 按讚數 / POST 投票 |
 
 ## 元件架構
 
@@ -135,6 +140,9 @@ components/
 ├── SectionBlock.tsx    # 左文右圖交替區塊
 ├── ArticleCard.tsx     # 文章卡片
 ├── ArticleGrid.tsx     # 文章卡片 Grid
+├── CommentSection.tsx  # 文章留言區（Client Component）
+├── CommentItem.tsx     # 單則留言（編輯/刪除）
+├── ReactionBar.tsx     # 匿名按讚/倒讚（Client Component）
 └── Footer.tsx          # 頁尾
 ```
 

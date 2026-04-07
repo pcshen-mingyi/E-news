@@ -3,6 +3,7 @@ import { getArticleContent, getArticlesByCategory } from "@/lib/markdown";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CommentSection from "@/components/CommentSection";
+import ReactionBar from "@/components/ReactionBar";
 
 export async function generateStaticParams() {
   const articles = getArticlesByCategory("notes");
@@ -55,6 +56,7 @@ export default async function NotesArticlePage({
         </header>
         <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: article.contentHtml }} />
       </article>
+      <ReactionBar articleSlug={`notes/${slug}`} />
       <CommentSection articleSlug={`notes/${slug}`} />
     </div>
   );
