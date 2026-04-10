@@ -1,6 +1,8 @@
 import Link from "next/link";
 import AuthButton from "./AuthButton";
 import NavLinks from "./NavLinks";
+import SearchBar from "./SearchBar";
+import MobileSearchOverlay from "./MobileSearchOverlay";
 
 export default function Navbar() {
   return (
@@ -12,13 +14,15 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-4">
             <NavLinks />
+            <SearchBar />
             <AuthButton />
           </div>
 
-          {/* Mobile: just show auth button, nav links in mobile menu handled by NavLinks */}
-          <div className="md:hidden flex items-center gap-3">
+          {/* Mobile: search + auth + hamburger menu */}
+          <div className="md:hidden flex items-center gap-1">
+            <MobileSearchOverlay />
             <AuthButton />
             <NavLinks mobile />
           </div>
